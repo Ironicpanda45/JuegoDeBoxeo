@@ -2,6 +2,7 @@ using UnityEngine;
 
 public class Enemigo : MonoBehaviour
 {
+    int golpes;
     enum Estado
     {
         Inactivo,
@@ -39,6 +40,12 @@ public class Enemigo : MonoBehaviour
             ManejarEstado();
             estadoAnterior = estadoActual;
         }
+
+        if (golpes >= 10)
+        {
+            manejadorSonido.ReproducirSonido(manejadorSonido.sonidoCampana);
+            Destroy(this.gameObject);
+        }
     }
 
     void ChecarCondiciones()
@@ -47,11 +54,13 @@ public class Enemigo : MonoBehaviour
         {
             manejadorSonido.ReproducirSonido(manejadorSonido.sonidoImpactoPuñetazo);
             estadoActual = Estado.RecibirDaño;
+            golpes++;
         }
         else if (Input.GetButtonDown("Golpe2"))
         {
             manejadorSonido.ReproducirSonido(manejadorSonido.sonidoImpactoPuñetazo);
             estadoActual = Estado.RecibirDaño;
+            golpes++;
         }
         else
         {
