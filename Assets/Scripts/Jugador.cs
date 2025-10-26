@@ -22,6 +22,7 @@ public class Jugador : MonoBehaviour
     bool puedeCambiarEstado;
 
     public Animator animator;
+    public ManejadorSonido manejadorSonido;
 
     void Start()
     {
@@ -42,6 +43,10 @@ public class Jugador : MonoBehaviour
 
         if (estadoActual != estadoAnterior)
         {
+            if (estadoAnterior == Estado.Cubrirse && estadoActual != Estado.Cubrirse)
+            {
+                manejadorSonido.ReproducirSonido(manejadorSonido.sonidoDescubrirse);
+            }
             ManejarEstado();
             estadoAnterior = estadoActual;
         }
@@ -88,14 +93,17 @@ public class Jugador : MonoBehaviour
                 break;
 
             case Estado.GolpeIzquierdo:
+                manejadorSonido.ReproducirSonido(manejadorSonido.sonidoAirePuñetazo);
                 animator.SetTrigger("GolpeIzquierdo");
                 break;
 
             case Estado.GolpeDerecho:
+                manejadorSonido.ReproducirSonido(manejadorSonido.sonidoAirePuñetazo);
                 animator.SetTrigger("GolpeDerecho");
                 break;
 
             case Estado.Cubrirse:
+                manejadorSonido.ReproducirSonido(manejadorSonido.sonidoCubrirse);
                 animator.SetTrigger("AnimacionEjecutandose");
                 animator.SetBool("Cubriendose", true);
                 break;

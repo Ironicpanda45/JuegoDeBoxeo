@@ -18,6 +18,7 @@ public class Enemigo : MonoBehaviour
     bool puedeCambiarEstado;
 
     public Animator animator;
+    public ManejadorSonido manejadorSonido;
 
     void Start()
     {
@@ -44,10 +45,12 @@ public class Enemigo : MonoBehaviour
     {
         if (Input.GetButtonDown("Golpe1"))
         {
+            manejadorSonido.ReproducirSonido(manejadorSonido.sonidoImpactoPuñetazo);
             estadoActual = Estado.RecibirDaño;
         }
         else if (Input.GetButtonDown("Golpe2"))
         {
+            manejadorSonido.ReproducirSonido(manejadorSonido.sonidoImpactoPuñetazo);
             estadoActual = Estado.RecibirDaño;
         }
         else
