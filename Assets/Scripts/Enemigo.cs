@@ -94,6 +94,11 @@ public class Enemigo : MonoBehaviour
             }
         }
 
+        if (!Input.GetButtonDown(""))
+        {
+
+        }
+
         ChecarCondiciones();
 
         // Transición
@@ -111,61 +116,7 @@ public class Enemigo : MonoBehaviour
 
     void ChecarCondiciones()
     {
-        // PRIORIDAD 1: REACCIÓN
-        if (Input.GetButtonDown("Jump")) // Test de daño (Quitar/modificar)
-        {
-            estadoActual = Estado.RecibirDaño;
-            return;
-        }
 
-        if (estadoActual == Estado.Cubrirse)
-        {
-            if (!Input.GetButton("Cubrirse"))
-            {
-                estadoActual = Estado.Inactivo;
-            }
-            return;
-        }
-
-        // PRIORIDAD 2: ACCIONES DE EVENTO (Usan Buffer)
-        else if (Input.GetButtonDown("Golpe1"))
-        {
-            if (estaminaActual > 0)
-            {
-                RegistrarInput(Estado.GolpeIzquierdo);
-            }
-        }
-        else if (Input.GetButtonDown("Golpe2"))
-        {
-            if (estaminaActual > 0)
-            {
-                RegistrarInput(Estado.GolpeDerecho);
-            }
-        }
-        else if (Input.GetButtonDown("MoverDerecha"))
-        {
-            RegistrarInput(Estado.MovimientoDerecha);
-        }
-        else if (Input.GetButtonDown("MoverIzquierda"))
-        {
-            RegistrarInput(Estado.MovimientoIzquierda);
-        }
-
-        // PRIORIDAD 3: ACCIONES DE ESTADO O INACTIVIDAD
-        else if (tiempoRestanteCooldown <= 0)
-        {
-            if (Input.GetButton("Cubrirse"))
-            {
-                if (estaminaActual > 0)
-                {
-                    estadoActual = Estado.Cubrirse;
-                }
-            }
-            else
-            {
-                estadoActual = Estado.Inactivo;
-            }
-        }
     }
 
     void RegistrarInput(Estado estadoDeseado)

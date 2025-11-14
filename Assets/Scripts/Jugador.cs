@@ -51,7 +51,7 @@ public class Jugador : MonoBehaviour
 
     void Update()
     {
-        //Debug.Log(bufferContador);
+        Debug.Log(bufferContador);
         // Cooldown
         if (tiempoRestanteCooldown > 0)
         {
@@ -119,7 +119,6 @@ public class Jugador : MonoBehaviour
             if (!Input.GetButton("Cubrirse"))
             {
                 estadoActual = Estado.Inactivo;
-                CubrirseActivo = true;
             }
             return;
         }
@@ -131,7 +130,6 @@ public class Jugador : MonoBehaviour
             {
                 RegistrarInput(Estado.GolpeIzquierdo);
             }
-
         }
         else if (Input.GetButtonDown("Golpe2"))
         {
@@ -139,7 +137,6 @@ public class Jugador : MonoBehaviour
             {
                 RegistrarInput(Estado.GolpeDerecho);
             }
-
         }
         else if (Input.GetButtonDown("MoverDerecha"))
         {
@@ -164,11 +161,8 @@ public class Jugador : MonoBehaviour
             else
             {
                 estadoActual = Estado.Inactivo;
+                CubrirseActivo = false;
             }
-        }
-        if (Input.GetButtonUp("Cubrirse"))
-        {
-            CubrirseActivo = false;
         }
     }
 
@@ -260,7 +254,7 @@ public class Jugador : MonoBehaviour
         estadoActual = Estado.Inactivo;
         estadoAnterior = Estado.Inactivo;
     }
-    public void RecibirDanoJugador()
+    public void RecibirDanoDeEnemigo()
     {
         estadoActual = Estado.RecibirDaño;
     }
