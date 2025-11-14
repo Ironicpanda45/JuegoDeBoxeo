@@ -3,7 +3,6 @@ using UnityEngine;
 
 public class Jugador : MonoBehaviour
 {
-    // Enumeración de Estados del Jugador
     enum Estado
     {
         Inactivo,
@@ -15,23 +14,18 @@ public class Jugador : MonoBehaviour
         RecibirDaño
     }
 
-    // --- Variables de Control de Estado ---
     Estado estadoActual;
     Estado estadoAnterior;
 
-    // --- Referencias de Componentes ---
     public Animator animator;
     public ManejadorSonido manejadorSonido;
     public ManejadorCamara manejadorCamara;
 
-    // --- Variables de Cooldown y Buffer ---
-    float tiempoRestanteCooldown; // cooldownEstado
+    float tiempoRestanteCooldown;
     float bufferTiempoTotal = 0.4f;
     float bufferContador;
     Estado inputBuffer;
 
-    // --- Variables del Sistema de Estamina (Aguante) ---
-    [Header("Sistema de Estamina")]
     public float estaminaActual = 100f;
     public float estaminaMaxima = 100f;
     float tasaRegeneracion = 60f;
