@@ -28,13 +28,13 @@ public class Jugador : MonoBehaviour
 
     public float estaminaActual = 100f;
     public float estaminaMaxima = 100f;
-    float tasaRegeneracion = 60f;
-    float retrasoRegeneracion = 2f;
+    float tasaRegeneracion = 40f;
+    float retrasoRegeneracion = 1f;
     float tiempoUltimoUsoEstamina;
 
     // Costos de Estamina
     float costoGolpe = 12.5f;
-    float costoCubrirse = 80f;
+    float costoCubrirse = 50f;
 
     void Start()
     {
@@ -112,13 +112,6 @@ public class Jugador : MonoBehaviour
 
     void ChecarCondiciones()
     {
-        // PRIORIDAD 1: REACCIÓN
-        if (Input.GetButtonDown("Jump")) // Test de daño (Quitar/modificar)
-        {
-            estadoActual = Estado.RecibirDaño;
-            return;
-        }
-
         if (estadoActual == Estado.Cubrirse)
         {
             if (!Input.GetButton("Cubrirse"))
@@ -256,5 +249,9 @@ public class Jugador : MonoBehaviour
     {
         estadoActual = Estado.Inactivo;
         estadoAnterior = Estado.Inactivo;
+    }
+    public void RecibirDanoJugador()
+    {
+        estadoActual = Estado.RecibirDaño;
     }
 }
