@@ -36,6 +36,8 @@ public class Jugador : MonoBehaviour
     float costoGolpe = 12.5f;
     float costoCubrirse = 50f;
 
+    bool CubrirseActivo = false;
+
     void Start()
     {
         estadoActual = Estado.Inactivo;
@@ -88,7 +90,7 @@ public class Jugador : MonoBehaviour
         }
         else
         {
-            if (Time.time > tiempoUltimoUsoEstamina + retrasoRegeneracion && estaminaActual < estaminaMaxima && estadoActual != Estado.Cubrirse)
+            if (Time.time > tiempoUltimoUsoEstamina + retrasoRegeneracion && estaminaActual < estaminaMaxima && estadoActual != Estado.Cubrirse && !CubrirseActivo)
             {
                 estaminaActual += tasaRegeneracion * Time.deltaTime;
                 estaminaActual = Mathf.Clamp(estaminaActual, 0, estaminaMaxima);
@@ -117,6 +119,7 @@ public class Jugador : MonoBehaviour
             if (!Input.GetButton("Cubrirse"))
             {
                 estadoActual = Estado.Inactivo;
+                CubrirseActivo = true;
             }
             return;
         }
@@ -153,12 +156,17 @@ public class Jugador : MonoBehaviour
                 if (estaminaActual > 0)
                 {
                     estadoActual = Estado.Cubrirse;
+                    CubrirseActivo = true;
                 }
             }
             else
             {
                 estadoActual = Estado.Inactivo;
             }
+        }
+        if (Input.GetButtonUp("Cubrirse"))
+        {
+            CubrirseActivo = false;
         }
     }
 
