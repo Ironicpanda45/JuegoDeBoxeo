@@ -51,7 +51,7 @@ public class Jugador : MonoBehaviour
 
     void Update()
     {
-        Debug.Log(bufferContador);
+        //Debug.Log(bufferContador);
         // Cooldown
         if (tiempoRestanteCooldown > 0)
         {
@@ -131,6 +131,7 @@ public class Jugador : MonoBehaviour
             {
                 RegistrarInput(Estado.GolpeIzquierdo);
             }
+
         }
         else if (Input.GetButtonDown("Golpe2"))
         {
@@ -138,6 +139,7 @@ public class Jugador : MonoBehaviour
             {
                 RegistrarInput(Estado.GolpeDerecho);
             }
+
         }
         else if (Input.GetButtonDown("MoverDerecha"))
         {
