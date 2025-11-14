@@ -3,6 +3,7 @@ using UnityEngine;
 
 public class Jugador : MonoBehaviour
 {
+    // Enumeración de Estados del Jugador
     enum Estado
     {
         Inactivo,
@@ -14,37 +15,100 @@ public class Jugador : MonoBehaviour
         RecibirDaño
     }
 
+    // --- Variables de Control de Estado ---
     Estado estadoActual;
     Estado estadoAnterior;
 
-    float posicionHorizontal;
-    float posicionVertical;
-    bool puedeCambiarEstado;
-
+    // --- Referencias de Componentes ---
     public Animator animator;
     public ManejadorSonido manejadorSonido;
+    public ManejadorCamara manejadorCamara;
+
+    // --- Variables de Cooldown y Buffer ---
+    float tiempoRestanteCooldown; // cooldownEstado
+    float bufferTiempoTotal = 0.4f;
+    float bufferContador;
+    Estado inputBuffer;
+
+    // --- Variables del Sistema de Estamina (Aguante) ---
+    [Header("Sistema de Estamina")]
+    public float estaminaActual = 100f;
+    public float estaminaMaxima = 100f;
+    float tasaRegeneracion = 60f;
+    float retrasoRegeneracion = 2f;
+    float tiempoUltimoUsoEstamina;
+
+    // Costos de Estamina
+    float costoGolpe = 12.5f;
+    float costoCubrirse = 80f;
 
     void Start()
     {
         estadoActual = Estado.Inactivo;
         estadoAnterior = estadoActual;
-        puedeCambiarEstado = true;
+        tiempoRestanteCooldown = 0;
+        bufferContador = 0;
+        inputBuffer = Estado.Inactivo;
+        estaminaActual = estaminaMaxima;
+        tiempoUltimoUsoEstamina = Time.time;
     }
 
     void Update()
     {
-        posicionHorizontal = Input.GetAxisRaw("Horizontal");
-        posicionVertical = Input.GetAxisRaw("Vertical");
-
-        if (puedeCambiarEstado)
+        Debug.Log(bufferContador);
+        // Cooldown
+        if (tiempoRestanteCooldown > 0)
         {
-            ChecarCondiciones();
+            tiempoRestanteCooldown -= Time.deltaTime;
+            if (tiempoRestanteCooldown <= 0)
+            {
+                ProcesarBuffer();
+            }
         }
 
+        // Buffer
+        if (bufferContador > 0)
+        {
+            bufferContador -= Time.deltaTime;
+            if (bufferContador <= 0)
+            {
+                inputBuffer = Estado.Inactivo;
+            }
+        }
+
+        // Consumo de stamina
+        if (estadoActual == Estado.Cubrirse && estaminaActual > 0)
+        {
+            if (estaminaActual <= 1)
+            {
+                estaminaActual = 0;
+                estadoActual = Estado.Inactivo;
+                tiempoUltimoUsoEstamina = Time.time;
+            }
+            else
+            {
+                estaminaActual -= costoCubrirse * Time.deltaTime;
+                estaminaActual = Mathf.Clamp(estaminaActual, 0, estaminaMaxima);
+                tiempoUltimoUsoEstamina = Time.time;
+            }
+        }
+        else
+        {
+            if (Time.time > tiempoUltimoUsoEstamina + retrasoRegeneracion && estaminaActual < estaminaMaxima && estadoActual != Estado.Cubrirse)
+            {
+                estaminaActual += tasaRegeneracion * Time.deltaTime;
+                estaminaActual = Mathf.Clamp(estaminaActual, 0, estaminaMaxima);
+            }
+        }
+
+        ChecarCondiciones();
+
+        // Transición
         if (estadoActual != estadoAnterior)
         {
             if (estadoAnterior == Estado.Cubrirse && estadoActual != Estado.Cubrirse)
             {
+                manejadorCamara.IniciarRetornoZoomSuave();
                 manejadorSonido.ReproducirSonido(manejadorSonido.sonidoDescubrirse);
             }
             ManejarEstado();
@@ -54,33 +118,83 @@ public class Jugador : MonoBehaviour
 
     void ChecarCondiciones()
     {
-        if (Input.GetButtonDown("Golpe1"))
+        // PRIORIDAD 1: REACCIÓN
+        if (Input.GetButtonDown("Jump")) // Test de daño (Quitar/modificar)
         {
-            estadoActual = Estado.GolpeIzquierdo;
+            estadoActual = Estado.RecibirDaño;
+            return;
+        }
+
+        if (estadoActual == Estado.Cubrirse)
+        {
+            if (!Input.GetButton("Cubrirse"))
+            {
+                estadoActual = Estado.Inactivo;
+            }
+            return;
+        }
+
+        // PRIORIDAD 2: ACCIONES DE EVENTO (Usan Buffer)
+        else if (Input.GetButtonDown("Golpe1"))
+        {
+            if (estaminaActual > 0)
+            {
+                RegistrarInput(Estado.GolpeIzquierdo);
+            }
         }
         else if (Input.GetButtonDown("Golpe2"))
         {
-            estadoActual = Estado.GolpeDerecho;
+            if (estaminaActual > 0)
+            {
+                RegistrarInput(Estado.GolpeDerecho);
+            }
         }
-        else if (posicionVertical == -1)
+        else if (Input.GetButtonDown("MoverDerecha"))
         {
-            estadoActual = Estado.Cubrirse;
+            RegistrarInput(Estado.MovimientoDerecha);
         }
-        else if (posicionHorizontal == 1)
+        else if (Input.GetButtonDown("MoverIzquierda"))
         {
-            estadoActual = Estado.MovimientoDerecha;
+            RegistrarInput(Estado.MovimientoIzquierda);
         }
-        else if (posicionHorizontal == -1)
+
+        // PRIORIDAD 3: ACCIONES DE ESTADO O INACTIVIDAD
+        else if (tiempoRestanteCooldown <= 0)
         {
-            estadoActual = Estado.MovimientoIzquierda;
+            if (Input.GetButton("Cubrirse"))
+            {
+                if (estaminaActual > 0)
+                {
+                    estadoActual = Estado.Cubrirse;
+                }
+            }
+            else
+            {
+                estadoActual = Estado.Inactivo;
+            }
         }
-        else if (Input.GetButtonDown("Jump"))
+    }
+
+    void RegistrarInput(Estado estadoDeseado)
+    {
+        if (tiempoRestanteCooldown <= 0)
         {
-            estadoActual = Estado.RecibirDaño;
+            estadoActual = estadoDeseado;
         }
         else
         {
-            estadoActual = Estado.Inactivo;
+            inputBuffer = estadoDeseado;
+            bufferContador = bufferTiempoTotal;
+        }
+    }
+
+    void ProcesarBuffer()
+    {
+        if (inputBuffer != Estado.Inactivo && bufferContador > 0)
+        {
+            estadoActual = inputBuffer;
+            inputBuffer = Estado.Inactivo;
+            bufferContador = 0;
         }
     }
 
@@ -93,36 +207,59 @@ public class Jugador : MonoBehaviour
                 break;
 
             case Estado.GolpeIzquierdo:
+                estaminaActual -= costoGolpe;
+                tiempoUltimoUsoEstamina = Time.time;
+                tiempoRestanteCooldown = 0.15f;
+                manejadorCamara.RestaurarCamara();
                 manejadorSonido.ReproducirSonido(manejadorSonido.sonidoAirePuñetazo);
                 animator.SetTrigger("GolpeIzquierdo");
+                manejadorCamara.IniciarShake(0.2f, 0.04f);
                 break;
 
             case Estado.GolpeDerecho:
+                estaminaActual -= costoGolpe;
+                tiempoUltimoUsoEstamina = Time.time;
+                tiempoRestanteCooldown = 0.15f;
+                manejadorCamara.RestaurarCamara();
                 manejadorSonido.ReproducirSonido(manejadorSonido.sonidoAirePuñetazo);
                 animator.SetTrigger("GolpeDerecho");
+                manejadorCamara.IniciarShake(0.2f, 0.04f);
                 break;
 
             case Estado.Cubrirse:
                 manejadorSonido.ReproducirSonido(manejadorSonido.sonidoCubrirse);
                 animator.SetTrigger("AnimacionEjecutandose");
                 animator.SetBool("Cubriendose", true);
+                manejadorCamara.IniciarZoom(65f);
                 break;
 
             case Estado.MovimientoDerecha:
-                transform.position += new Vector3(0.1f, 0, 0);
+                tiempoRestanteCooldown = 0.5f;
+                manejadorSonido.ReproducirSonido(manejadorSonido.sonidoDescubrirse);
+                manejadorCamara.IniciarZoomTemporal(60f, 0.05f);
+                animator.SetTrigger("Cubriendose");
                 break;
 
             case Estado.MovimientoIzquierda:
-                transform.position += new Vector3(-0.1f, 0, 0);
+                tiempoRestanteCooldown = 0.5f;
+                manejadorSonido.ReproducirSonido(manejadorSonido.sonidoDescubrirse);
+                manejadorCamara.IniciarZoomTemporal(60f, 0.05f);
+                animator.SetTrigger("Cubriendose");
                 break;
+
             case Estado.RecibirDaño:
+                tiempoUltimoUsoEstamina = Time.time;
+                manejadorSonido.ReproducirSonido(manejadorSonido.sonidoImpactoPuñetazo);
+                manejadorSonido.ReproducirSonido(manejadorSonido.sonidoAirePuñetazo);
                 animator.SetTrigger("RecibirDaño");
+                manejadorCamara.IniciarShake(0.3f, 0.1f);
+                tiempoRestanteCooldown = 0.5f;
                 break;
         }
     }
+
     public void DesbloquearEstado()
     {
-        puedeCambiarEstado = true;
         estadoActual = Estado.Inactivo;
         estadoAnterior = Estado.Inactivo;
     }

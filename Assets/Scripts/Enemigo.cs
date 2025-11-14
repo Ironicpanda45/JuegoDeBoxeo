@@ -20,6 +20,7 @@ public class Enemigo : MonoBehaviour
 
     public Animator animator;
     public ManejadorSonido manejadorSonido;
+    public ManejadorCamara manejadorCamara;
 
     void Start()
     {
