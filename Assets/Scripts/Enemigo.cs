@@ -94,11 +94,6 @@ public class Enemigo : MonoBehaviour
             }
         }
 
-        if (!Input.GetButtonDown(""))
-        {
-
-        }
-
         ChecarCondiciones();
 
         // Transición
