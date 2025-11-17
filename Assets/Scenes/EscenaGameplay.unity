@@ -279,7 +279,7 @@ MonoBehaviour:
     m_Bits: 1
   m_VolumeTrigger: {fileID: 0}
   m_VolumeFrameworkUpdateModeOption: 2
-  m_RenderPostProcessing: 1
+  m_RenderPostProcessing: 0
   m_Antialiasing: 0
   m_AntialiasingQuality: 2
   m_StopNaN: 0
@@ -341,7 +341,7 @@ Camera:
     height: 1
   near clip plane: 0.3
   far clip plane: 1000
-  field of view: 75
+  field of view: 43.9
   orthographic: 0
   orthographic size: 5
   m_Depth: -1
@@ -368,7 +368,7 @@ Transform:
   m_GameObject: {fileID: 251989492}
   serializedVersion: 2
   m_LocalRotation: {x: -0.22252074, y: 0.46632737, z: -0.12246982, w: -0.8473633}
-  m_LocalPosition: {x: 10.02, y: 8.07, z: -5.26}
+  m_LocalPosition: {x: 4.12, y: 7.09, z: -3.25}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -2229,7 +2229,7 @@ Transform:
   m_GameObject: {fileID: 2107161766}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: 1, z: -0, w: 0.000000029802319}
-  m_LocalPosition: {x: -0.04845, y: 4.06, z: -0.35}
+  m_LocalPosition: {x: 5.06, y: 4.03, z: 8.22}
   m_LocalScale: {x: 5.449714, y: 3.1463928, z: 0.29132}
   m_ConstrainProportionsScale: 0
   m_Children: []
