@@ -46359,8 +46359,8 @@ AnimationClip:
   m_HasGenericRootTransform: 0
   m_HasMotionFloatCurves: 0
   m_Events:
-  - time: 0.25
-    functionName: 
+  - time: 0.21666667
+    functionName: RegistrarGolpe
     data: 
     objectReferenceParameter: {fileID: 0}
     floatParameter: 0

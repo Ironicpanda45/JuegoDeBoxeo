@@ -1,8 +1,9 @@
+using System;
 using UnityEngine;
 
 public class Enemigo : MonoBehaviour
 {
-    enum Estado
+    public enum Estado
     {
         Inactivo,
         GolpeIzquierdo,
@@ -13,64 +14,64 @@ public class Enemigo : MonoBehaviour
         RecibirDaño
     }
 
-    Estado estadoActual;
+    public Estado estadoActual;
     Estado estadoAnterior;
 
     public Animator animator;
+
     public ManejadorSonido manejadorSonido;
-    public ManejadorCamara manejadorCamara;
+    public ManejadorGameplay manejadorGameplay;
+    public Jugador jugador;
 
     float tiempoRestanteCooldown;
-    float bufferTiempoTotal = 0.4f;
-    float bufferContador;
-    Estado inputBuffer;
+    float retrasoDecision = 0.2f;
 
-    public float estaminaActual = 100f;
-    public float estaminaMaxima = 100f;
+    float estaminaActual = 100f;
+    float estaminaMaxima = 100f;
     float tasaRegeneracion = 40f;
     float retrasoRegeneracion = 1f;
     float tiempoUltimoUsoEstamina;
 
-    // Costos de Estamina
     float costoGolpe = 12.5f;
     float costoCubrirse = 50f;
+
+    public bool EstaCubierto;
+    public int direccionCubierta = 0;
+
+    bool RecibeDaño = false;
+    float contadorDecision;
+
+    // fallos intencionales
+    float probabilidadFallarBloqueo = 0.25f;
+    float probabilidadFallarGolpe = 0.15f;
 
     void Start()
     {
         estadoActual = Estado.Inactivo;
         estadoAnterior = estadoActual;
-        tiempoRestanteCooldown = 0;
-        bufferContador = 0;
-        inputBuffer = Estado.Inactivo;
+
         estaminaActual = estaminaMaxima;
         tiempoUltimoUsoEstamina = Time.time;
+
+        contadorDecision = retrasoDecision;
     }
 
     void Update()
     {
-        Debug.Log(bufferContador);
-        // Cooldown
+        if (RecibeDaño)
+        {
+            estadoActual = Estado.RecibirDaño;
+            RecibeDaño = false;
+        }
+
+        // cooldown
         if (tiempoRestanteCooldown > 0)
         {
             tiempoRestanteCooldown -= Time.deltaTime;
-            if (tiempoRestanteCooldown <= 0)
-            {
-                ProcesarBuffer();
-            }
         }
 
-        // Buffer
-        if (bufferContador > 0)
-        {
-            bufferContador -= Time.deltaTime;
-            if (bufferContador <= 0)
-            {
-                inputBuffer = Estado.Inactivo;
-            }
-        }
-
-        // Consumo de stamina
-        if (estadoActual == Estado.Cubrirse && estaminaActual > 0)
+        // stamina
+        if (estadoActual == Estado.Cubrirse)
         {
             if (estaminaActual <= 1)
             {
@@ -87,54 +88,100 @@ public class Enemigo : MonoBehaviour
         }
         else
         {
-            if (Time.time > tiempoUltimoUsoEstamina + retrasoRegeneracion && estaminaActual < estaminaMaxima && estadoActual != Estado.Cubrirse)
+            if (Time.time > tiempoUltimoUsoEstamina + retrasoRegeneracion &&
+                estaminaActual < estaminaMaxima &&
+                estadoActual != Estado.Cubrirse)
             {
                 estaminaActual += tasaRegeneracion * Time.deltaTime;
                 estaminaActual = Mathf.Clamp(estaminaActual, 0, estaminaMaxima);
             }
         }
 
-        ChecarCondiciones();
+        // cubierta activa
+        if (estadoActual == Estado.Cubrirse ||
+            estadoActual == Estado.MovimientoDerecha ||
+            estadoActual == Estado.MovimientoIzquierda)
+        {
+            EstaCubierto = true;
+        }
+        else
+        {
+            EstaCubierto = false;
+            direccionCubierta = 0;
+        }
 
-        // Transición
+        // IA
+        contadorDecision -= Time.deltaTime;
+        if (contadorDecision <= 0)
+        {
+            DecidirAccion();
+            contadorDecision = retrasoDecision;
+        }
+
         if (estadoActual != estadoAnterior)
         {
-            if (estadoAnterior == Estado.Cubrirse && estadoActual != Estado.Cubrirse)
-            {
-                manejadorCamara.IniciarRetornoZoomSuave();
-                manejadorSonido.ReproducirSonido(manejadorSonido.sonidoDescubrirse);
-            }
             ManejarEstado();
             estadoAnterior = estadoActual;
         }
     }
 
-    void ChecarCondiciones()
+    void DecidirAccion()
     {
+        if (tiempoRestanteCooldown > 0) return;
 
-    }
+        // leer al jugador de forma directa
+        bool jugadorCubierto = jugador.EstaCubierto;
+        int direccionJugador = jugador.direccionCubierta;
 
-    void RegistrarInput(Estado estadoDeseado)
-    {
-        if (tiempoRestanteCooldown <= 0)
+        // decidir golpear
+        if (UnityEngine.Random.Range(0f, 1f) > 0.5f)
         {
-            estadoActual = estadoDeseado;
+            if (UnityEngine.Random.Range(0f, 1f) > probabilidadFallarGolpe &&
+                estaminaActual >= costoGolpe)
+            {
+                if (UnityEngine.Random.Range(0, 2) == 0)
+                {
+                    estadoActual = Estado.GolpeIzquierdo;
+                }
+                else
+                {
+                    estadoActual = Estado.GolpeDerecho;
+                }
+                return;
+            }
         }
-        else
-        {
-            inputBuffer = estadoDeseado;
-            bufferContador = bufferTiempoTotal;
-        }
-    }
 
-    void ProcesarBuffer()
-    {
-        if (inputBuffer != Estado.Inactivo && bufferContador > 0)
+        // decidir cubrirse
+        if (jugadorCubierto == false)
         {
-            estadoActual = inputBuffer;
-            inputBuffer = Estado.Inactivo;
-            bufferContador = 0;
+            if (UnityEngine.Random.Range(0f, 1f) > probabilidadFallarBloqueo &&
+                estaminaActual > costoCubrirse / 2)
+            {
+                estadoActual = Estado.Cubrirse;
+                direccionCubierta = 2;
+                return;
+            }
         }
+
+        // decidir esquivar
+        if (UnityEngine.Random.Range(0f, 1f) < 0.3f)
+        {
+            int lado = UnityEngine.Random.Range(0, 2) == 0 ? -1 : 1;
+
+            if (lado == -1)
+            {
+                estadoActual = Estado.MovimientoIzquierda;
+                direccionCubierta = -1;
+            }
+            else
+            {
+                estadoActual = Estado.MovimientoDerecha;
+                direccionCubierta = 1;
+            }
+            return;
+        }
+
+        estadoActual = Estado.Inactivo;
     }
 
     void ManejarEstado()
@@ -143,68 +190,71 @@ public class Enemigo : MonoBehaviour
         {
             case Estado.Inactivo:
                 animator.SetBool("Cubriendose", false);
+                direccionCubierta = 0;
                 break;
 
             case Estado.GolpeIzquierdo:
                 estaminaActual -= costoGolpe;
                 tiempoUltimoUsoEstamina = Time.time;
                 tiempoRestanteCooldown = 0.15f;
-                manejadorCamara.RestaurarCamara();
-                manejadorSonido.ReproducirSonido(manejadorSonido.sonidoAirePuñetazo);
                 animator.SetTrigger("GolpeIzquierdo");
-                manejadorCamara.IniciarShake(0.2f, 0.04f);
+                manejadorGameplay.RegistrarGolpe(this.gameObject);
                 break;
 
             case Estado.GolpeDerecho:
                 estaminaActual -= costoGolpe;
                 tiempoUltimoUsoEstamina = Time.time;
                 tiempoRestanteCooldown = 0.15f;
-                manejadorCamara.RestaurarCamara();
-                manejadorSonido.ReproducirSonido(manejadorSonido.sonidoAirePuñetazo);
                 animator.SetTrigger("GolpeDerecho");
-                manejadorCamara.IniciarShake(0.2f, 0.04f);
+                manejadorGameplay.RegistrarGolpe(this.gameObject);
                 break;
 
             case Estado.Cubrirse:
                 manejadorSonido.ReproducirSonido(manejadorSonido.sonidoCubrirse);
-                animator.SetTrigger("AnimacionEjecutandose");
                 animator.SetBool("Cubriendose", true);
-                manejadorCamara.IniciarZoom(65f);
                 break;
 
             case Estado.MovimientoDerecha:
                 tiempoRestanteCooldown = 0.5f;
-                manejadorSonido.ReproducirSonido(manejadorSonido.sonidoDescubrirse);
-                manejadorCamara.IniciarZoomTemporal(60f, 0.05f);
-                animator.SetTrigger("Cubriendose");
+                tiempoUltimoUsoEstamina = Time.time;
+                direccionCubierta = 1;
+                animator.SetBool("Cubriendose", true);
+                animator.SetTrigger("AnimacionEjecutandose");
                 break;
 
             case Estado.MovimientoIzquierda:
                 tiempoRestanteCooldown = 0.5f;
-                manejadorSonido.ReproducirSonido(manejadorSonido.sonidoDescubrirse);
-                manejadorCamara.IniciarZoomTemporal(60f, 0.05f);
-                animator.SetTrigger("Cubriendose");
+                tiempoUltimoUsoEstamina = Time.time;
+                direccionCubierta = -1;
+                animator.SetBool("Cubriendose", true);
+                animator.SetTrigger("AnimacionEjecutandose");
                 break;
 
             case Estado.RecibirDaño:
-                tiempoUltimoUsoEstamina = Time.time;
-                manejadorSonido.ReproducirSonido(manejadorSonido.sonidoImpactoPuñetazo);
-                manejadorSonido.ReproducirSonido(manejadorSonido.sonidoAirePuñetazo);
-                animator.SetTrigger("RecibirDaño");
-                manejadorCamara.IniciarShake(0.3f, 0.1f);
                 tiempoRestanteCooldown = 0.5f;
+                animator.SetTrigger("RecibirDaño");
+                manejadorSonido.ReproducirSonido(manejadorSonido.sonidoImpactoPuñetazo);
                 break;
         }
     }
-
     public void DesbloquearEstado()
     {
         estadoActual = Estado.Inactivo;
         estadoAnterior = Estado.Inactivo;
     }
-
-    public void RecibirDano()
+    public void RecibirDanoDeJugador()
     {
-        estadoActual = Estado.RecibirDaño;
+        RecibeDaño = true;
+    }
+
+    public void Golpear()
+    {
+        manejadorGameplay.RegistrarGolpe(this.gameObject);
+    }
+
+    public void CubrirseExitoso()
+    {
+        manejadorSonido.ReproducirSonido(manejadorSonido.sonidoImpactoPuñetazo);
+        RecibeDaño = false;
     }
 }

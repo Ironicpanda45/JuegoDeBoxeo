@@ -3,7 +3,7 @@ using UnityEngine;
 
 public class Jugador : MonoBehaviour
 {
-    enum Estado
+    public enum Estado
     {
         Inactivo,
         GolpeIzquierdo,
@@ -14,7 +14,7 @@ public class Jugador : MonoBehaviour
         RecibirDaño
     }
 
-    Estado estadoActual;
+    public Estado estadoActual;
     Estado estadoAnterior;
 
     public Animator animator;
@@ -32,11 +32,16 @@ public class Jugador : MonoBehaviour
     float retrasoRegeneracion = 1f;
     float tiempoUltimoUsoEstamina;
 
-    // Costos de Estamina
     float costoGolpe = 12.5f;
     float costoCubrirse = 50f;
 
-    bool CubrirseActivo = false;
+    bool CubrirseActivoBoton = false;
+    bool RecibeDaño = false;
+
+    public ManejadorGameplay manejadorGameplay;
+    public bool EstaCubierto;
+
+    public int direccionCubierta = 0;
 
     void Start()
     {
@@ -47,11 +52,11 @@ public class Jugador : MonoBehaviour
         inputBuffer = Estado.Inactivo;
         estaminaActual = estaminaMaxima;
         tiempoUltimoUsoEstamina = Time.time;
+        direccionCubierta = 0;
     }
 
     void Update()
     {
-        Debug.Log(bufferContador);
         // Cooldown
         if (tiempoRestanteCooldown > 0)
         {
@@ -73,7 +78,7 @@ public class Jugador : MonoBehaviour
         }
 
         // Consumo de stamina
-        if (estadoActual == Estado.Cubrirse && estaminaActual > 0)
+        if (estadoActual == Estado.Cubrirse)
         {
             if (estaminaActual <= 1)
             {
@@ -90,11 +95,23 @@ public class Jugador : MonoBehaviour
         }
         else
         {
-            if (Time.time > tiempoUltimoUsoEstamina + retrasoRegeneracion && estaminaActual < estaminaMaxima && estadoActual != Estado.Cubrirse && !CubrirseActivo)
+            if (Time.time > tiempoUltimoUsoEstamina + retrasoRegeneracion && estaminaActual < estaminaMaxima && estadoActual != Estado.Cubrirse && !CubrirseActivoBoton)
             {
                 estaminaActual += tasaRegeneracion * Time.deltaTime;
                 estaminaActual = Mathf.Clamp(estaminaActual, 0, estaminaMaxima);
             }
+        }
+
+        if (estadoActual == Estado.Cubrirse ||
+            estadoActual == Estado.MovimientoDerecha ||
+            estadoActual == Estado.MovimientoIzquierda)
+        {
+            EstaCubierto = true;
+        }
+        else
+        {
+            EstaCubierto = false;
+            direccionCubierta = 0;
         }
 
         ChecarCondiciones();
@@ -114,11 +131,27 @@ public class Jugador : MonoBehaviour
 
     void ChecarCondiciones()
     {
+        if (RecibeDaño == true)
+        {
+            estadoActual = Estado.RecibirDaño;
+            RecibeDaño = false;
+            return;
+        }
+
         if (estadoActual == Estado.Cubrirse)
         {
             if (!Input.GetButton("Cubrirse"))
             {
                 estadoActual = Estado.Inactivo;
+            }
+            else
+            {
+                if (Input.GetButton("MoverIzquierda"))
+                    direccionCubierta = -1;
+                else if (Input.GetButton("MoverDerecha"))
+                    direccionCubierta = 1;
+                else
+                    direccionCubierta = 2;
             }
             return;
         }
@@ -141,10 +174,12 @@ public class Jugador : MonoBehaviour
         else if (Input.GetButtonDown("MoverDerecha"))
         {
             RegistrarInput(Estado.MovimientoDerecha);
+            direccionCubierta = -1;
         }
         else if (Input.GetButtonDown("MoverIzquierda"))
         {
             RegistrarInput(Estado.MovimientoIzquierda);
+            direccionCubierta = 1;
         }
 
         // PRIORIDAD 3: ACCIONES DE ESTADO O INACTIVIDAD
@@ -155,13 +190,13 @@ public class Jugador : MonoBehaviour
                 if (estaminaActual > 0)
                 {
                     estadoActual = Estado.Cubrirse;
-                    CubrirseActivo = true;
+                    CubrirseActivoBoton = true;
                 }
             }
             else
             {
                 estadoActual = Estado.Inactivo;
-                CubrirseActivo = false;
+                CubrirseActivoBoton = false;
             }
         }
     }
@@ -195,6 +230,7 @@ public class Jugador : MonoBehaviour
         {
             case Estado.Inactivo:
                 animator.SetBool("Cubriendose", false);
+                direccionCubierta = 0;
                 break;
 
             case Estado.GolpeIzquierdo:
@@ -226,25 +262,30 @@ public class Jugador : MonoBehaviour
 
             case Estado.MovimientoDerecha:
                 tiempoRestanteCooldown = 0.5f;
+                tiempoUltimoUsoEstamina = Time.time;
+                direccionCubierta = 1;
                 manejadorSonido.ReproducirSonido(manejadorSonido.sonidoDescubrirse);
                 manejadorCamara.IniciarZoomTemporal(60f, 0.05f);
-                animator.SetTrigger("Cubriendose");
+                animator.SetTrigger("AnimacionEjecutandose");
+                animator.SetBool("Cubriendose", true);
                 break;
 
             case Estado.MovimientoIzquierda:
                 tiempoRestanteCooldown = 0.5f;
+                tiempoUltimoUsoEstamina = Time.time;
+                direccionCubierta = -1;
                 manejadorSonido.ReproducirSonido(manejadorSonido.sonidoDescubrirse);
                 manejadorCamara.IniciarZoomTemporal(60f, 0.05f);
-                animator.SetTrigger("Cubriendose");
+                animator.SetTrigger("AnimacionEjecutandose");
+                animator.SetBool("Cubriendose", true);
                 break;
 
             case Estado.RecibirDaño:
-                tiempoUltimoUsoEstamina = Time.time;
+                tiempoRestanteCooldown = 0.5f;
                 manejadorSonido.ReproducirSonido(manejadorSonido.sonidoImpactoPuñetazo);
                 manejadorSonido.ReproducirSonido(manejadorSonido.sonidoAirePuñetazo);
                 animator.SetTrigger("RecibirDaño");
                 manejadorCamara.IniciarShake(0.3f, 0.1f);
-                tiempoRestanteCooldown = 0.5f;
                 break;
         }
     }
@@ -256,6 +297,15 @@ public class Jugador : MonoBehaviour
     }
     public void RecibirDanoDeEnemigo()
     {
-        estadoActual = Estado.RecibirDaño;
+        RecibeDaño = true;
+    }
+    public void Golpear()
+    {
+        manejadorGameplay.RegistrarGolpe(this.gameObject);
+    }
+    public void CubrirseExitoso()
+    {
+        manejadorSonido.ReproducirSonido(manejadorSonido.sonidoImpactoPuñetazo);
+        RecibeDaño = false;
     }
 }
