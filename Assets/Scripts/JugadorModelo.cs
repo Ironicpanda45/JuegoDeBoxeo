@@ -2,18 +2,18 @@ using UnityEngine;
 
 public class JugadorModelo : MonoBehaviour
 {
-    private Jugador jugadorScript;
+    Jugador jugadorScript;
+    Enemigo enemigoScript;
 
     void Start()
     {
-        scriptPadre = GetComponentInParent<Jugador>();
-        if (scriptPadre == null)
+        jugadorScript = GetComponentInParent<Jugador>();
+        if (jugadorScript == null)
         {
-            scriptPadre = GetComponentInParent<Enemigo>();
+            enemigoScript = GetComponentInParent<Enemigo>();
         }
     }
 
-    // Esta es la función que será llamada por el Animation Event
     public void EjecutarFuncionGolpe()
     {
         jugadorScript.Golpear();
