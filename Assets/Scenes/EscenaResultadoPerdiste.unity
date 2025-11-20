@@ -841,7 +841,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &932340904
 RectTransform:
   m_ObjectHideFlags: 0
@@ -858,7 +858,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0.5}
   m_AnchorMax: {x: 0, y: 0.5}
-  m_AnchoredPosition: {x: 512.99994, y: 201}
+  m_AnchoredPosition: {x: 513, y: 201}
   m_SizeDelta: {x: 1051.079, y: 504.385}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &932340905
@@ -1792,7 +1792,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &1160869301
 RectTransform:
   m_ObjectHideFlags: 0
@@ -1965,13 +1965,13 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1232539255}
   serializedVersion: 2
-  m_LocalRotation: {x: -0.085549705, y: -0.5080097, z: -0.050795693, w: 0.85558593}
-  m_LocalPosition: {x: 3.78, y: 2.62, z: -2.94}
+  m_LocalRotation: {x: 0.35862198, y: -0.46401837, z: 0.2129341, w: 0.7814961}
+  m_LocalPosition: {x: 3.78, y: 5.82, z: -3}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
-  m_LocalEulerAnglesHint: {x: -11.42, y: -61.4, z: 0}
+  m_LocalEulerAnglesHint: {x: 49.3, y: -61.4, z: 0}
 --- !u!114 &1232539259
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2087,8 +2087,8 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: "\"Cree en ti mismo y en todo lo que eres. Saber que hay algo dentro de
-    ti que es m\xE1s grande que cualquier obst\xE1culo\"\n\u2013 Christian D. Larson. "
+  m_text: "\"Nuestra mayor debilidad reside en rendirnos. La forma m\xE1s segura
+    de tener \xE9xito es intentarlo una vez m\xE1s\" \n- Thomas Edison."
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: d174cc38c17e5f54b8153415a1398565, type: 2}
   m_sharedMaterial: {fileID: -634108470596432310, guid: d174cc38c17e5f54b8153415a1398565, type: 2}
@@ -2945,7 +2945,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &1738786096
 Transform:
   m_ObjectHideFlags: 0
