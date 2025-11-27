@@ -31,9 +31,9 @@ Material:
     - _IridescenceStrength: 0.5
     - _LightIntensity: 1.47
     - _OutlineWidth: 0.0294
-    - _RimStrength: 0.06
+    - _RimStrength: -2
     m_Colors:
-    - _OutlineColor: {r: 0.0754717, g: 0.0754717, b: 0.0754717, a: 1}
+    - _OutlineColor: {r: 1, g: 1, b: 1, a: 1}
     - _RimColor: {r: 0.46226418, g: 0.46226418, b: 0.46226418, a: 1}
     - _Tint: {r: 0, g: 0, b: 0, a: 1}
   m_BuildTextureStacks: []
