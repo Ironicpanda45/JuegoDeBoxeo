@@ -954,30 +954,6 @@ MonoBehaviour:
   OnTerminarDialogos:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 0}
-        m_TargetAssemblyTypeName: AgregadorDialogo, Assembly-CSharp
-        m_MethodName: AgregarNuevosDialogos
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
-      - m_Target: {fileID: 0}
-        m_TargetAssemblyTypeName: MoverTransform, Assembly-CSharp
-        m_MethodName: ColocarCamaraPrincipal
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
       - m_Target: {fileID: 814628435}
         m_TargetAssemblyTypeName: UnityEngine.Transform, UnityEngine
         m_MethodName: LookAt
@@ -1062,7 +1038,7 @@ MonoBehaviour:
   textoDialogo: {fileID: 1792619783}
   frases:
   - Ejemplo
-  cuadroSiguiente: {fileID: 1112979791}
+  cuadroSiguiente: {fileID: 0}
   OnTerminarDialogos:
     m_PersistentCalls:
       m_Calls:
@@ -1660,7 +1636,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!114 &608026955
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2141,32 +2117,13 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: efbd583f830640048826f25cfc637bc3, type: 3}
---- !u!1 &13044153990397f024cce509c65fc9b0ff46257be6c9188266
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 1304415403}
-  - component: {fileID: 1304415402}
-  - component: {fileID: 1304415401}
-  - component: {fileID: 1304415400}
-  m_Layer: 0
-  m_Name: Cube (7)
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
 --- !u!65 &1304415400
 BoxCollider:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1304415399}
+  m_GameObject: {fileID: 13044153990397}
   m_Material: {fileID: 0}
   m_IncludeLayers:
     serializedVersion: 2
@@ -2187,7 +2144,7 @@ MeshRenderer:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1304415399}
+  m_GameObject: {fileID: 13044153990397}
   m_Enabled: 1
   m_CastShadows: 1
   m_ReceiveShadows: 1
@@ -2232,7 +2189,7 @@ MeshFilter:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1304415399}
+  m_GameObject: {fileID: 13044153990397}
   m_Mesh: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
 --- !u!4 &1304415403
 Transform:
@@ -2240,7 +2197,7 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1304415399}
+  m_GameObject: {fileID: 13044153990397}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: -28.5, y: 7.8836, z: -0.03}
@@ -2480,7 +2437,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &1537985076
 Transform:
   m_ObjectHideFlags: 0
@@ -3248,7 +3205,6 @@ RectTransform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 1792619782}
-  - {fileID: 1112979792}
   m_Father: {fileID: 608026958}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
@@ -3881,6 +3837,25 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   clipIntro: {fileID: 8300000, guid: 25c8699c68a8fc3488d935e104226d6f, type: 3}
   clipBucle: {fileID: 8300000, guid: 3c2e7a075890cd846a776f89b6786008, type: 3}
+--- !u!1 &13044153990397
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1304415403}
+  - component: {fileID: 1304415402}
+  - component: {fileID: 1304415401}
+  - component: {fileID: 1304415400}
+  m_Layer: 0
+  m_Name: Cube (7)
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
 --- !u!1001 &425731683035916317
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -4027,7 +4002,6 @@ SceneRoots:
   - {fileID: 692740011}
   - {fileID: 594143576}
   - {fileID: 1708968463}
-  - {fileID: 397731064}
   - {fileID: 7029683714905685011}
   - {fileID: 1689381271}
   - {fileID: 2007799819}
