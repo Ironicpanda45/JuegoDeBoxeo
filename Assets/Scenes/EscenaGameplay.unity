@@ -2911,9 +2911,25 @@ PrefabInstance:
       propertyPath: m_Name
       value: Gradas
       objectReference: {fileID: 0}
+    - target: {fileID: 3257770941654940347, guid: 2b005239d11672542b73293007acc70a, type: 3}
+      propertyPath: 'm_Materials.Array.data[0]'
+      value: 
+      objectReference: {fileID: 2100000, guid: 8c849ecebc731b64bb9bf5d48451a19b, type: 2}
+    - target: {fileID: 3949141096845845197, guid: 2b005239d11672542b73293007acc70a, type: 3}
+      propertyPath: 'm_Materials.Array.data[0]'
+      value: 
+      objectReference: {fileID: 2100000, guid: 8c849ecebc731b64bb9bf5d48451a19b, type: 2}
+    - target: {fileID: 4362862194569600639, guid: 2b005239d11672542b73293007acc70a, type: 3}
+      propertyPath: 'm_Materials.Array.data[0]'
+      value: 
+      objectReference: {fileID: 2100000, guid: 8c849ecebc731b64bb9bf5d48451a19b, type: 2}
+    - target: {fileID: 4473284503280184604, guid: 2b005239d11672542b73293007acc70a, type: 3}
+      propertyPath: 'm_Materials.Array.data[0]'
+      value: 
+      objectReference: {fileID: 2100000, guid: 8c849ecebc731b64bb9bf5d48451a19b, type: 2}
     - target: {fileID: 8251911310340037106, guid: 2b005239d11672542b73293007acc70a, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 6.2
+      value: 6.01
       objectReference: {fileID: 0}
     - target: {fileID: 8251911310340037106, guid: 2b005239d11672542b73293007acc70a, type: 3}
       propertyPath: m_LocalPosition.y
@@ -2921,7 +2937,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8251911310340037106, guid: 2b005239d11672542b73293007acc70a, type: 3}
       propertyPath: m_LocalPosition.z
-      value: -5.5
+      value: -6.45
       objectReference: {fileID: 0}
     - target: {fileID: 8251911310340037106, guid: 2b005239d11672542b73293007acc70a, type: 3}
       propertyPath: m_LocalRotation.w
