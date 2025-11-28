@@ -256,14 +256,6 @@ PrefabInstance:
       value: 0.00000023796909
       objectReference: {fileID: 0}
     - target: {fileID: -7285025709699086136, guid: 8e26c78045eac9e4c8110d3f37c098a9, type: 3}
-      propertyPath: m_LocalRotation.x
-      value: 0.17634834
-      objectReference: {fileID: 0}
-    - target: {fileID: -7285025709699086136, guid: 8e26c78045eac9e4c8110d3f37c098a9, type: 3}
-      propertyPath: m_LocalRotation.z
-      value: 0.052833363
-      objectReference: {fileID: 0}
-    - target: {fileID: -7285025709699086136, guid: 8e26c78045eac9e4c8110d3f37c098a9, type: 3}
       propertyPath: m_LocalEulerAnglesHint.x
       value: 9.750904
       objectReference: {fileID: 0}
@@ -848,7 +840,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   frases: []
-  sistemaDialogos: {fileID: 0}
+  sistemaDialogos: {fileID: 165725457}
   OnTerminarDialogos:
     m_PersistentCalls:
       m_Calls: []
@@ -859,6 +851,56 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 111522472}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 504.3117, y: 189.93306, z: -20.45191}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &165725456
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 165725458}
+  - component: {fileID: 165725457}
+  m_Layer: 0
+  m_Name: SistemaDialogos
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &165725457
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 165725456}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5371922d95b81b14cbf55099459ed70e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  textoDialogo: {fileID: 1792619783}
+  frases: []
+  cuadroSiguiente: {fileID: 0}
+  OnTerminarDialogos:
+    m_PersistentCalls:
+      m_Calls: []
+--- !u!4 &165725458
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 165725456}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 504.3117, y: 189.93306, z: -20.45191}
@@ -1085,7 +1127,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!114 &608026955
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1299,13 +1341,13 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 814628430}
   serializedVersion: 2
-  m_LocalRotation: {x: 0.12810321, y: 0, z: 0, w: 0.99176085}
-  m_LocalPosition: {x: 0.87, y: 3.43, z: -4.26}
+  m_LocalRotation: {x: 0.2588191, y: 0, z: 0, w: 0.9659258}
+  m_LocalPosition: {x: 0, y: 4.86, z: -2.98}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
-  m_LocalEulerAnglesHint: {x: 14.72, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: 30, y: 0, z: 0}
 --- !u!1 &832575517
 GameObject:
   m_ObjectHideFlags: 0
@@ -1604,7 +1646,7 @@ Animator:
   m_GameObject: {fileID: 1861438888}
   m_Enabled: 1
   m_Avatar: {fileID: 0}
-  m_Controller: {fileID: 9100000, guid: 434fc6f41e975424688f8b3b0022f4d2, type: 2}
+  m_Controller: {fileID: 9100000, guid: e56a4005204e197429d79847c6fe227b, type: 2}
   m_CullingMode: 0
   m_UpdateMode: 0
   m_ApplyRootMotion: 0
@@ -1890,4 +1932,5 @@ SceneRoots:
   - {fileID: 1537985076}
   - {fileID: 1908313042}
   - {fileID: 418338937}
+  - {fileID: 165725458}
   - {fileID: 111522474}
