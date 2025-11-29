@@ -8,7 +8,7 @@ public class TransicionesFade : MonoBehaviour
     public float duracion = 1f;
 
     bool haciendoFadeOut = false;
-    bool haciendoFadeIn = true; // empezamos con fade de inicio
+    bool haciendoFadeIn = true;
     float tiempo = 0f;
     string escenaObjetivo = "";
 

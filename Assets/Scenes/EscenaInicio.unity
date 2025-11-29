@@ -806,9 +806,6 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: 8e26c78045eac9e4c8110d3f37c098a9, type: 3}
       insertIndex: -1
       addedObject: {fileID: 1861438891}
-    - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: 8e26c78045eac9e4c8110d3f37c098a9, type: 3}
-      insertIndex: -1
-      addedObject: {fileID: 1861438890}
   m_SourcePrefab: {fileID: 100100000, guid: 8e26c78045eac9e4c8110d3f37c098a9, type: 3}
 --- !u!1 &355707883
 GameObject:
@@ -1601,8 +1598,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 0, g: 0, b: 0, a: 1}
-  m_RaycastTarget: 1
+  m_Color: {r: 0, g: 0, b: 0, a: 0}
+  m_RaycastTarget: 0
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
   m_OnCullStateChanged:
@@ -1840,7 +1837,7 @@ MonoBehaviour:
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
           m_IntArgument: 0
           m_FloatArgument: 0
-          m_StringArgument: EscenaGameplay
+          m_StringArgument: EscenaLockers
           m_BoolArgument: 0
         m_CallState: 2
 --- !u!114 &1541104921
@@ -1891,18 +1888,6 @@ Transform:
   m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: 8e26c78045eac9e4c8110d3f37c098a9, type: 3}
   m_PrefabInstance: {fileID: 17514140}
   m_PrefabAsset: {fileID: 0}
---- !u!114 &1861438890
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1861438888}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 343ea79e745482d409ac31a613838019, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!95 &1861438891
 Animator:
   serializedVersion: 7
@@ -1983,7 +1968,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   panelNegro: {fileID: 1202854702}
-  duracion: 3
+  duracion: 1
 --- !u!1 &2115645339
 GameObject:
   m_ObjectHideFlags: 0

@@ -7,6 +7,10 @@ public class ManejadorSonido : MonoBehaviour
     public AudioClip sonidoCubrirse;
     public AudioClip sonidoDescubrirse;
     public AudioClip sonidoCampana;
+    public AudioClip sonidoError;
+    public AudioClip sonidoAcierto;
+    public AudioClip sonidoReloj;
+    public AudioClip sonidoDialogo;
     float variacionPitch = 0.1f;
 
     public void ReproducirSonido(AudioClip clip, float volumen = 1.0f)

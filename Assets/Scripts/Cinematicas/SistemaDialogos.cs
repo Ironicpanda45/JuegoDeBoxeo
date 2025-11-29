@@ -14,6 +14,8 @@ public class SistemaDialogos : MonoBehaviour
 
     public UnityEvent OnTerminarDialogos;
 
+    public ManejadorSonido manejadorSonido;
+
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
@@ -22,6 +24,7 @@ public class SistemaDialogos : MonoBehaviour
         letra_actual = 0;
         contadorAgregarLetra = 0;
         texto = "";
+
     }
 
     // Update is called once per frame
@@ -38,8 +41,9 @@ public class SistemaDialogos : MonoBehaviour
                     contadorAgregarLetra = 0;
                     letra_actual += 1;
                     textoDialogo.text = texto;
+                    manejadorSonido?.ReproducirSonido(manejadorSonido.sonidoDialogo);
                 }
-                if (Input.GetKeyDown(KeyCode.Space))
+                if (Input.GetButtonDown("Siguiente"))
                 {
                     texto = frases[frase_actual];
                     letra_actual = frases[frase_actual].Length;
@@ -49,7 +53,7 @@ public class SistemaDialogos : MonoBehaviour
             else
             {
                 cuadroSiguiente.SetActive(true);
-                if (Input.GetKeyDown(KeyCode.Space))
+                if (Input.GetButtonDown("Siguiente"))
                 {
                     cuadroSiguiente.SetActive(false);
                     texto = "";

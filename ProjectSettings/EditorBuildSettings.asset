@@ -11,6 +11,36 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/EscenaGameplay.unity
     guid: 3550483eb78c3a24fa7274de19b07d0d
+  - enabled: 1
+    path: Assets/Scenes/EscenaResultadoGanaste.unity
+    guid: e8ac0b0618e815f429cd7df26ffdca8f
+  - enabled: 1
+    path: Assets/Scenes/EscenaResultadoPerdiste.unity
+    guid: 03d0e0168d6ff244dbf8c6ddc319eb79
+  - enabled: 1
+    path: Assets/Scenes/Cinematica1.unity
+    guid: 55ef65658c28a8943af66a0e81de570a
+  - enabled: 1
+    path: Assets/Scenes/EscenaLockers.unity
+    guid: 67c64fc064515724496fecc8c915aa59
+  - enabled: 1
+    path: Assets/Scenes/EscenaGameplay2.unity
+    guid: 869e4a70a024456499def7996510a251
+  - enabled: 1
+    path: Assets/Scenes/EscenaGameplay3.unity
+    guid: 06f225b672f971c4e9817062f8ab7b26
+  - enabled: 1
+    path: Assets/Scenes/EscenaLockers3.unity
+    guid: 016668b04483c464bb2176cc5c4c8915
+  - enabled: 1
+    path: Assets/Scenes/EscenaLockers2.unity
+    guid: 98b0b5a47e0ad494ca3b86fc27f2cce0
+  - enabled: 1
+    path: Assets/Scenes/EscenaResultadoGanaste2.unity
+    guid: 714d4193624bfd940aa4ff352e20413c
+  - enabled: 1
+    path: Assets/Scenes/EscenaResultadoGanaste3.unity
+    guid: 29fa23e5842c13449bde0ea6146facf0
   m_configObjects:
     com.unity.input.settings.actions: {fileID: -944628639613478452, guid: 052faaac586de48259a63d0c4782560b, type: 3}
   m_UseUCBPForAssetBundles: 0

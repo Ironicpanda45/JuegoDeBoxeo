@@ -31,6 +31,7 @@ Material:
     - _IridescenceSpeed: 10
     - _IridescenceStrength: 0.384
     - _LightIntensity: 0.6
+    - _MagicDepth: 5.86
     - _OutlineThickness: 0.02
     - _OutlineWidth: 0.02
     - _RimStrength: -0.6
