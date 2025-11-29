@@ -1327,8 +1327,9 @@ MonoBehaviour:
   - Moverme hacia la izquierda (Tecla izquierda o D-Pad izquierdo)
   - Moverme hacia la derecha (Tecla derecha o D-Pad derecho)
   - Cubrirme (Tecla abajo o D-Pad abajo)
-  - Golpe izquierdo (Tecla Z o LT)
-  - Golpe derecho (Tecla X o RT)
+  - Golpe izquierdo (Tecla Z o boton X)
+  - Golpe derecho (Tecla X o boton Y)
+  - Debo moverme en el momento justo.
   - Creo que estoy listo...
   sistemaDialogos: {fileID: 165725457}
   OnTerminarDialogos:
@@ -3580,6 +3581,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 808f21eaf1acd7e4dbdfa1ee186c7039, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  menuOpciones: {fileID: 0}
+  menuPrincipal: {fileID: 0}
+  menuCreditos: {fileID: 0}
 --- !u!4 &1908313042
 Transform:
   m_ObjectHideFlags: 0

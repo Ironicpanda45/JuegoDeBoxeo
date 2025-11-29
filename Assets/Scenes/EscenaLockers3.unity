@@ -946,9 +946,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   frases:
-  - No puedo celebrarlo. Solo es un tercio del camino.
-  - Ahora, a por el segundo asalto.
-  - Vamos a ver si esto de ser bueno no fue casualidad.
+  - "No hay vuelta atr\xE1s."
+  - A ganar.
   sistemaDialogos: {fileID: 165725457}
   OnTerminarDialogos:
     m_PersistentCalls:
@@ -1025,9 +1024,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   textoDialogo: {fileID: 1792619783}
   frases:
-  - "Funcion\xF3."
-  - "La concentraci\xF3n funcion\xF3."
-  - "No se trataba de ser el m\xE1s fuerte, sino el m\xE1s preciso."
+  - "No hay m\xE1s susurros sobre ser un fraude."
+  - Lo que hice en la pelea uno y dos... fue real.
+  - "Fui yo. Yo segu\xED el ritmo, yo empuj\xE9 la barra."
+  - Soy un luchador.
   cuadroSiguiente: {fileID: 2071757878}
   OnTerminarDialogos:
     m_PersistentCalls:
@@ -3350,6 +3350,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 808f21eaf1acd7e4dbdfa1ee186c7039, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  menuOpciones: {fileID: 0}
+  menuPrincipal: {fileID: 0}
+  menuCreditos: {fileID: 0}
 --- !u!4 &1908313042
 Transform:
   m_ObjectHideFlags: 0

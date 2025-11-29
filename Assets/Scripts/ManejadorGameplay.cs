@@ -71,6 +71,8 @@ public class ManejadorGameplay : MonoBehaviour
 
     public TransicionesFade transiciones;
 
+    float dpadXPrev = 0f;
+    float dpadYPrev = 0f;
     void Start()
     {
         valorObjetivo = porcentaje;
@@ -171,11 +173,33 @@ public class ManejadorGameplay : MonoBehaviour
 
     void DetectarInputJugador()
     {
-        if (Input.GetButtonDown("MoverIzquierda")) RevisarHit(TipoNota.MovimientoIzquierda);
-        if (Input.GetButtonDown("MoverDerecha")) RevisarHit(TipoNota.MovimientoDerecha);
-        if (Input.GetButtonDown("Golpe1")) RevisarHit(TipoNota.GolpeIzquierda);
-        if (Input.GetButtonDown("Golpe2")) RevisarHit(TipoNota.GolpeDerecha);
-        if (Input.GetButtonDown("Cubrirse")) RevisarHit(TipoNota.Cubrirse);
+        if (Input.GetButtonDown("MoverIzquierda"))
+            RevisarHit(TipoNota.MovimientoIzquierda);
+
+        if (Input.GetButtonDown("MoverDerecha"))
+            RevisarHit(TipoNota.MovimientoDerecha);
+
+        if (Input.GetButtonDown("Golpe1"))
+            RevisarHit(TipoNota.GolpeIzquierda);
+
+        if (Input.GetButtonDown("Golpe2"))
+            RevisarHit(TipoNota.GolpeDerecha);
+
+        if (Input.GetButtonDown("Cubrirse"))
+            RevisarHit(TipoNota.Cubrirse);
+
+        float dx = Input.GetAxis("DPadX");
+        float dy = Input.GetAxis("DPadY");
+        if (dx < -0.5f && dpadXPrev >= -0.5f)
+            RevisarHit(TipoNota.MovimientoIzquierda);
+        if (dx > 0.5f && dpadXPrev <= 0.5f)
+            RevisarHit(TipoNota.MovimientoDerecha);
+        if (dy < -0.5f && dpadYPrev >= -0.5f)
+            RevisarHit(TipoNota.Cubrirse);
+
+
+        dpadXPrev = dx;
+        dpadYPrev = dy;
     }
 
     void RevisarHit(TipoNota tipo)
